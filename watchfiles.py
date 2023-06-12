@@ -39,7 +39,7 @@ def process_file(directory, file):
                 print(f"Pre-staging {filepath}")
 
                 # Append a message to the file
-                file_obj = open(filepath, "")
+                file_obj = open(filepath, "w")
                 file_obj.write("PRE-STAGED\n")
                 file_obj.close()
 
