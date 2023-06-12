@@ -14,6 +14,7 @@
 import subprocess
 import os
 from datetime import datetime
+import sys
 
 def file_removed(directory, file):
     subprocess.call(['logger', '-i', '-t', 'watchfilesd', '-p', 'local0.info', f'{file} was removed from {directory}'])
@@ -58,9 +59,11 @@ def process_file(directory, file):
 
 
 def main():
-    # Enter the path to the desired directory to watch
+    # Enter the path to the desired directory to watch relative to the script's directory
     # The directory of the script being run is os.path.dirname(os.path.abspath(__file__))
-    directory_to_watch = os.path.dirname(os.path.abspath(__file__))
+    # directory_to_watch = os.path.dirname(os.path.abspath(__file__)) + "/PRE-STAGE"
+    directory_to_watch = os.path.dirname(os.path.abspath(__file__)) + "/" + sys.argv[1]
+    print(directory_to_watch)
 
     process = subprocess.Popen(['inotifywait', '-q', '-m', '-r', '-e', 'modify,delete,create,moved_to', directory_to_watch],
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
